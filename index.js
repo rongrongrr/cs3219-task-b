@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 // Connect to Mongoose and set connection variable
-mongoose.connect('mongodb://localhost/cs3219-task-b', { useNewUrlParser: true});
+mongoose.connect('mongodb://localhost/cs3219-task-b', { useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 
 // Added check for DB connection
@@ -32,9 +32,5 @@ app.get('/', (req, res) => res.send('<h1>CS3219 Task B</h1><h3>Hello! Welcome~</
 
 // Use Api routes in the App
 app.use('/api', apiRoutes);
-// Launch app to listen to specified port
-app.listen(process.env.PORT || 8080, function(){
-    console.log("Running CS3219 Task B project on port %d in %s mode", this.address().port, app.settings.env);
-});
 
 module.exports = app;

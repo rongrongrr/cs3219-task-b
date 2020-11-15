@@ -1,7 +1,6 @@
 // Initialize express router
 let router = require('express').Router();
 // Set default API response
-// Set default API response
 
 router.get('/', (req, res) => res.send('<h1>API Page</h1><h3>Pages available:</h3><ul><li>/products</li><li>/outlets</li></ul>'));
 
