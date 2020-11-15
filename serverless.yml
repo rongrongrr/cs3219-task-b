@@ -21,8 +21,5 @@ functions:
          path: /{proxy}
          method: ANY
          cors: true
-     - http:
-         path: /api/{proxy}
-         method: ANY
-         cors: true
+         
 

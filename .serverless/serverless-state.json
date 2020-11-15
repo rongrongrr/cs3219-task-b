@@ -164,7 +164,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/cs3219-task-b/production/1605445780026-2020-11-15T13:09:40.026Z/cs3219-task-b.zip"
+                "S3Key": "serverless/cs3219-task-b/production/1605446094075-2020-11-15T13:14:54.075Z/cs3219-task-b.zip"
               },
               "FunctionName": "cs3219-task-b-production-api",
               "Handler": "lambda.universal",
@@ -212,33 +212,6 @@
                   "ApiGatewayRestApi",
                   "RootResourceId"
                 ]
-              },
-              "PathPart": "{proxy}",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayResourceApi": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "api",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayResourceApiProxyVar": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Ref": "ApiGatewayResourceApi"
               },
               "PathPart": "{proxy}",
               "RestApiId": {
@@ -339,51 +312,6 @@
               }
             }
           },
-          "ApiGatewayMethodApiProxyVarOptions": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "AuthorizationType": "NONE",
-              "HttpMethod": "OPTIONS",
-              "MethodResponses": [
-                {
-                  "StatusCode": "200",
-                  "ResponseParameters": {
-                    "method.response.header.Access-Control-Allow-Origin": true,
-                    "method.response.header.Access-Control-Allow-Headers": true,
-                    "method.response.header.Access-Control-Allow-Methods": true
-                  },
-                  "ResponseModels": {}
-                }
-              ],
-              "RequestParameters": {},
-              "Integration": {
-                "Type": "MOCK",
-                "RequestTemplates": {
-                  "application/json": "{statusCode:200}"
-                },
-                "ContentHandling": "CONVERT_TO_TEXT",
-                "IntegrationResponses": [
-                  {
-                    "StatusCode": "200",
-                    "ResponseParameters": {
-                      "method.response.header.Access-Control-Allow-Origin": "'*'",
-                      "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,X-Amz-User-Agent'",
-                      "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,DELETE,GET,HEAD,PATCH,POST,PUT'"
-                    },
-                    "ResponseTemplates": {
-                      "application/json": "#set($origin = $input.params(\"Origin\"))\n#if($origin == \"\") #set($origin = $input.params(\"origin\")) #end\n#if($origin.matches(\".+\")) #set($context.responseOverride.header.Access-Control-Allow-Origin = $origin) #end"
-                    }
-                  }
-                ]
-              },
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceApiProxyVar"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
           "ApiGatewayMethodAny": {
             "Type": "AWS::ApiGateway::Method",
             "Properties": {
@@ -473,50 +401,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayMethodApiProxyVarAny": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "ANY",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceApiProxyVar"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "ApiLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": []
-            }
-          },
-          "ApiGatewayDeployment1605445767717": {
+          "ApiGatewayDeployment1605446081492": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -527,10 +412,8 @@
             "DependsOn": [
               "ApiGatewayMethodOptions",
               "ApiGatewayMethodProxyVarOptions",
-              "ApiGatewayMethodApiProxyVarOptions",
               "ApiGatewayMethodAny",
-              "ApiGatewayMethodProxyVarAny",
-              "ApiGatewayMethodApiProxyVarAny"
+              "ApiGatewayMethodProxyVarAny"
             ]
           },
           "ApiLambdaPermissionApiGateway": {
@@ -733,32 +616,6 @@
               },
               "integration": "AWS_PROXY"
             }
-          },
-          {
-            "http": {
-              "path": "api/{proxy}",
-              "method": "any",
-              "cors": {
-                "origins": [
-                  "*"
-                ],
-                "origin": "*",
-                "methods": [
-                  "OPTIONS",
-                  "ANY"
-                ],
-                "headers": [
-                  "Content-Type",
-                  "X-Amz-Date",
-                  "Authorization",
-                  "X-Api-Key",
-                  "X-Amz-Security-Token",
-                  "X-Amz-User-Agent"
-                ],
-                "allowCredentials": false
-              },
-              "integration": "AWS_PROXY"
-            }
           }
         ],
         "name": "cs3219-task-b-production-api",
@@ -788,7 +645,7 @@
     "artifact": "/Users/admin/cs3219-task-b/.serverless/cs3219-task-b.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/cs3219-task-b/production/1605445780026-2020-11-15T13:09:40.026Z",
+    "artifactDirectoryName": "serverless/cs3219-task-b/production/1605446094075-2020-11-15T13:14:54.075Z",
     "artifact": "cs3219-task-b.zip"
   }
 }
