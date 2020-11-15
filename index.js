@@ -33,6 +33,6 @@ app.get('/', (req, res) => res.send('<h1>CS3219 Task B</h1><h3>Hello! Welcome~</
 // Use Api routes in the App
 app.use('/api', apiRoutes);
 // Launch app to listen to specified port
-app.listen(process.env.PORT || 3000, function(){
+app.listen(process.env.PORT || 8080, function(){
     console.log("Running CS3219 Task B project on port %d in %s mode", this.address().port, app.settings.env);
 });
