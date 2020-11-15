@@ -36,3 +36,5 @@ app.use('/api', apiRoutes);
 app.listen(process.env.PORT || 8080, function(){
     console.log("Running CS3219 Task B project on port %d in %s mode", this.address().port, app.settings.env);
 });
+
+module.exports = app;
